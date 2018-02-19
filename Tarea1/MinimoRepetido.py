@@ -4,6 +4,8 @@ n=50
 nodos=[]
 aristas=[]
 
+%Comentario
+
 #t=1
 with open ("MinRepNodos.dat","w") as crear:
     for t in range(n):
