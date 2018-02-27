@@ -1,48 +1,68 @@
 from random import random
 from math import sqrt
 
-
 class Grafo:
 
-    def _init_(mod):
-        mod.n = 50
-        mod.nodos = []
-        mod.aristas= []
-        mod.dis = []
-        mod.dismin=[]
+    def __init__(self):
+        self.nodos = []
+        self.aristas= []
+        self.dis = []
+        self.dismin = []
 
-    def nodos(nod):
-        for t in range(mod.n):
-            x=random()
-            y=random()
-            mod.nodos[(x,y)].add((x,y))
+    def agrega(self, n):
+        with open("ModificadoNodos.dat", "w") as crear:
+            for t in range(n):
+                x=random()
+                y=random()
+                self.nodos.append((x,y))
+                print (x,y,file=crear)
 
-    def distancia(nod):
-        for (x1,y1) in mod.nodos:
-            for (x2,y2) in mod.nodos:
-                d=math.sqrt(((y2-y1)**2)+((x2-x1)**2))
+    def distancia(self):
+        for (x1,y1) in self.nodos:
+            for (x2,y2) in self.nodos:
+                d=sqrt(((y2-y1)**2)+((x2-x1)**2))
                 if d==0:
-                    mod.dis[d].add(d)
+                    self.dis.append(d)
                 else:
-                    if d in dis:
-                        mod.dis[20].add(20)
+                    if d in self.dis:
+                        self.dis.append(20)
                     else:
-                        mod.dis[d].add(d)
+                        self.dis.append(d)
 
-    def conecta(nod):
-        for (x1,y1) in mod.nodos:
-            mod.dismin
-            for(x2,y2) in mod.nodos:
-                dm=math.sqrt(((y2-y1)**2)+((x2-x1)**2))
+    def conecta(self):
+        for (x1,y1) in self.nodos:
+            self.dismin=[]
+            for(x2,y2) in self.nodos:
+                dm=sqrt(((y2-y1)**2)+((x2-x1)**2))
                 if dm==0:
-                    mod.dismin[20].add(20)
+                    self.dismin.append(20)
                 else:
-                    if dm in mod.dismin:
-                        mod.dismin[20].add(20)
+                    if dm in self.dismin:
+                        self.dismin.append(20)
                     else:
-                        mod.dismin[d].add(d)
-            if min(mod.dismin) in mod.dis:
-                a1=mod.nodos[mod.dismin.index(min(mod.dismin))][0]
-                b1=mod.nodos[mod.dismin.index(min(mod.dismin))][1]
-                mod.aristas[(x,y)].add((x,y))
-                mod.dis.remove(min(mod.dismin))
+                        self.dismin.append(dm)
+            #print(self.nodos[self.dismin.index(min(self.dismin))][0])
+            if min(self.dismin) in self.dis:
+                a1=self.nodos[self.dismin.index(min(self.dismin))][0]
+                b1=self.nodos[self.dismin.index(min(self.dismin))][1]
+                self.aristas.append((x1,y1,a1,b1))
+                self.dis.remove(min(self.dismin))
+
+    def graficar(self):
+        with open("Modificado.plot","w") as archivo:
+             print("set term png", file=archivo)
+             print("set output 'ModificadoGraf.png'", file=archivo)
+             print("set xrange [0:1]", file=archivo)
+             print("set yrange [0:1]", file=archivo)
+             print("set pointsize 3", file=archivo)
+             print("set size square", file=archivo)
+             print("set key off", file=archivo)
+             num=1
+             for a in self.aristas:  
+                 (x1,y1,x2,y2)=a
+                 print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead lw 3".format(num,x1,y1,x2,y2),file=archivo)
+                 num+=1
+             print("show arrow", file=archivo)
+             print("plot 'ModificadoNodos.dat' using 1:2 with points pt 7", file=archivo)
+             print("quit()",file=archivo)
+        

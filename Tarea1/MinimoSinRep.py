@@ -1,6 +1,6 @@
 from random import random
 import math
-n=50
+n=10
 nodos=[]
 aristas=[]
 
@@ -26,6 +26,8 @@ for (x1,y1) in nodos:
             else:
                 dis.append(d)
 
+print(len(dis))
+
 
 aristas=[]
 for (x1,y1) in nodos:
@@ -44,6 +46,8 @@ for (x1,y1) in nodos:
         b1=nodos[dismin.index(min(dismin))][1]
         aristas.append((x1,y1,a1,b1))
         dis.remove(min(dismin))
+
+print(len(dis))
         
 with open("Min.plot","w") as archivo:
     print("set term png", file=archivo)
