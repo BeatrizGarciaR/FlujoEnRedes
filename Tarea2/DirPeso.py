@@ -82,7 +82,7 @@ class Grafo:
 
              
 
-i=5 #Cantidad de nodos que va a tener el grafo
+i=40 #Cantidad de nodos que va a tener el grafo
 G = Grafo()
 G.agrega(i)
 G.distancia()
