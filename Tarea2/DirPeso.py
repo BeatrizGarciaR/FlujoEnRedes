@@ -2,7 +2,7 @@ from random import random
 from math import sqrt, ceil
 
 def punto(x1,y1):
-    return(((x1[0] + y1[0])/2), ((x1[1] + y1[1])/2))
+    return(((x1[0] + y1[0])/2), ((x1[1] + y1[1])/2)+.005)
 
 class Grafo:
 
@@ -74,7 +74,7 @@ class Grafo:
                  if pesos is 1:
                     p = self.peso[num]
                     (kp, rp) = self.vector[num]
-                    print("set label '{:d}' at {:f},{:f}".format(p, kp, rp),file = archivo)
+                    print("set label font ',10' '{:d}' at {:f},{:f} tc rgb 'brown'".format(p, kp, rp),file = archivo)
                  num+=1
              print("show arrow", file=archivo)
              print("plot 'DirPesoNodos.dat' using 1:2 with points pt 7 lc 6", file=archivo)
@@ -82,7 +82,7 @@ class Grafo:
 
              
 
-i=40 #Cantidad de nodos que va a tener el grafo
+i=10 #Cantidad de nodos que va a tener el grafo
 G = Grafo()
 G.agrega(i)
 G.distancia()
