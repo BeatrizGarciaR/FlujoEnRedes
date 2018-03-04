@@ -27,7 +27,7 @@ class Grafo:
             for (x2,y2) in self.nodos:
                 d=sqrt(((y2-y1)**2)+((x2-x1)**2))
                 if d==0:
-                    self.dis.append(d)
+                    self.dis.append(20)
                 else:
                     if d in self.dis:
                         self.dis.append(20)
