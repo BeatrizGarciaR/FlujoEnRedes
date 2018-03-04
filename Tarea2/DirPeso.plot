@@ -2,35 +2,67 @@ set term pdf
 set output 'DirPeso.pdf'
 set xrange [-.1:1.1]
 set yrange [-.1:1.1]
-set pointsize .6
+set pointsize .7
 set size square
 set key off
-set arrow 1 from 0.462403, 0.310828 to 0.363671, 0.332583 nohead filled lw 1
-set label font ',11' '6' at 0.408037,0.326706 tc rgb 'brown'
-set arrow 2 from 0.627024, 0.927893 to 0.756586, 0.937680 nohead filled lw 1
-set label font ',11' '5' at 0.686805,0.937787 tc rgb 'brown'
-set arrow 3 from 0.034137, 0.139575 to 0.363671, 0.332583 nohead filled lw 1
-set label font ',11' '7' at 0.193904,0.241079 tc rgb 'brown'
-set arrow 4 from 0.676321, 0.234520 to 0.705479, 0.151291 nohead filled lw 1
-set label font ',11' '2' at 0.685900,0.197905 tc rgb 'brown'
-set arrow 5 from 0.826219, 0.162523 to 0.705479, 0.151291 nohead filled lw 1
-set label font ',11' '8' at 0.760849,0.161907 tc rgb 'brown'
-set arrow 6 from 0.643687, 0.399113 to 0.617463, 0.460057 nohead filled lw 1
-set label font ',11' '3' at 0.625575,0.434585 tc rgb 'brown'
-set arrow 7 from 0.414410, 0.071240 to 0.471114, 0.021202 nohead filled lw 1
-set label font ',11' '5' at 0.437762,0.051221 tc rgb 'brown'
-set arrow 8 from 0.099232, 0.921448 to 0.330202, 0.782271 nohead filled lw 1
-set label font ',11' '9' at 0.209717,0.856860 tc rgb 'brown'
-set arrow 9 from 0.649674, 0.059282 to 0.568642, 0.117236 nohead filled lw 1
-set label font ',11' '10' at 0.604158,0.093259 tc rgb 'brown'
-set arrow 10 from 0.330202, 0.782271 to 0.336360, 0.663643 nohead filled lw 1
-set label font ',11' '1' at 0.328281,0.727957 tc rgb 'brown'
-set arrow 11 from 0.336360, 0.663643 to 0.276295, 0.627823 nohead filled lw 1
-set label font ',11' '6' at 0.301327,0.650733 tc rgb 'brown'
-set arrow 12 from 0.563763, 0.418011 to 0.617463, 0.460057 nohead filled lw 1
-set label font ',11' '6' at 0.585613,0.444034 tc rgb 'brown'
-set arrow 13 from 0.748044, 0.704236 to 0.756586, 0.937680 nohead filled lw 1
-set label font ',11' '2' at 0.747315,0.825958 tc rgb 'brown'
+set arrow 1 from 0.831211, 0.736654 to 0.829482, 0.717936 head filled lw 1
+set label font ',11' '9' at 0.825346,0.732295 tc rgb 'brown'
+set arrow 2 from 0.427676, 0.908748 to 0.496274, 0.964432 head filled lw 1
+set label font ',11' '9' at 0.456975,0.941590 tc rgb 'brown'
+set arrow 3 from 0.547580, 0.865873 to 0.554577, 0.821564 head filled lw 1
+set label font ',11' '4' at 0.546078,0.848719 tc rgb 'brown'
+set arrow 4 from 0.743876, 0.878877 to 0.772269, 0.852875 head filled lw 1
+set label font ',11' '6' at 0.753073,0.870876 tc rgb 'brown'
+set arrow 5 from 0.102482, 0.408878 to 0.090635, 0.366479 head filled lw 1
+set label font ',11' '4' at 0.091559,0.392679 tc rgb 'brown'
+set arrow 6 from 0.384137, 0.191454 to 0.316388, 0.240941 head filled lw 1
+set label font ',11' '8' at 0.345262,0.221197 tc rgb 'brown'
+set arrow 7 from 0.611039, 0.791850 to 0.554577, 0.821564 head filled lw 1
+set label font ',11' '9' at 0.577808,0.811707 tc rgb 'brown'
+set arrow 8 from 0.733712, 0.292510 to 0.716975, 0.379403 head filled lw 1
+set label font ',11' '4' at 0.720344,0.340957 tc rgb 'brown'
+set arrow 9 from 0.718048, 0.392340 to 0.716975, 0.379403 head filled lw 1
+set label font ',11' '6' at 0.712511,0.390872 tc rgb 'brown'
+set arrow 10 from 0.053520, 0.408120 to 0.102482, 0.408878 head filled lw 1
+set label font ',11' '5' at 0.073001,0.413499 tc rgb 'brown'
+set arrow 11 from 0.828995, 0.171743 to 0.920463, 0.066754 head filled lw 1
+set label font ',11' '9' at 0.869729,0.124249 tc rgb 'brown'
+set arrow 12 from 0.614783, 0.220588 to 0.524672, 0.179894 head filled lw 1
+set label font ',11' '7' at 0.564727,0.205241 tc rgb 'brown'
+set arrow 13 from 0.406010, 0.678651 to 0.496239, 0.768432 head filled lw 1
+set label font ',11' '5' at 0.446124,0.728542 tc rgb 'brown'
+set arrow 14 from 0.055593, 0.818164 to 0.073676, 0.721550 head filled lw 1
+set label font ',11' '7' at 0.059634,0.774857 tc rgb 'brown'
+set arrow 15 from 0.666307, 0.451884 to 0.718048, 0.392340 head filled lw 1
+set label font ',11' '4' at 0.687178,0.427112 tc rgb 'brown'
+set arrow 16 from 0.367411, 0.475601 to 0.189303, 0.485142 head filled lw 1
+set label font ',11' '2' at 0.273357,0.485371 tc rgb 'brown'
+set arrow 17 from 0.011303, 0.125555 to 0.019069, 0.249538 head filled lw 1
+set label font ',11' '6' at 0.010186,0.192547 tc rgb 'brown'
+set arrow 18 from 0.942996, 0.322657 to 0.828995, 0.171743 head filled lw 1
+set label font ',11' '5' at 0.880995,0.252200 tc rgb 'brown'
+set arrow 19 from 0.572440, 0.065262 to 0.495623, 0.028827 head filled lw 1
+set label font ',11' '7' at 0.529031,0.052045 tc rgb 'brown'
+set arrow 20 from 0.122763, 0.265343 to 0.116471, 0.363337 head filled lw 1
+set label font ',11' '1' at 0.114617,0.319340 tc rgb 'brown'
+set arrow 21 from 0.116471, 0.363337 to 0.090635, 0.366479 head filled lw 1
+set label font ',11' '9' at 0.098553,0.369908 tc rgb 'brown'
+set arrow 22 from 0.251667, 0.648460 to 0.406010, 0.678651 head filled lw 1
+set label font ',11' '3' at 0.323838,0.668555 tc rgb 'brown'
+set arrow 23 from 0.496239, 0.768432 to 0.554577, 0.821564 head filled lw 1
+set label font ',11' '3' at 0.520408,0.799998 tc rgb 'brown'
+set arrow 24 from 0.999702, 0.065993 to 0.920463, 0.066754 head filled lw 1
+set label font ',11' '8' at 0.955082,0.071374 tc rgb 'brown'
+set arrow 25 from 0.697360, 0.748828 to 0.611039, 0.791850 head filled lw 1
+set label font ',11' '3' at 0.649200,0.775339 tc rgb 'brown'
+set arrow 26 from 0.556550, 0.384053 to 0.666307, 0.451884 head filled lw 1
+set label font ',11' '2' at 0.606428,0.422969 tc rgb 'brown'
+set arrow 27 from 0.590800, 0.955200 to 0.496274, 0.964432 head filled lw 1
+set label font ',11' '4' at 0.538537,0.964816 tc rgb 'brown'
+set arrow 28 from 0.019069, 0.249538 to 0.122763, 0.265343 head filled lw 1
+set label font ',11' '10' at 0.065916,0.262441 tc rgb 'brown'
+set arrow 29 from 0.189303, 0.485142 to 0.102482, 0.408878 head filled lw 1
+set label font ',11' '9' at 0.140893,0.452010 tc rgb 'brown'
 show arrow
 plot 'DirPesoNodos.dat' using 1:2 with points pt 7 lc 6
 quit()
