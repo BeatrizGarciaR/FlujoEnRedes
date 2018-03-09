@@ -2,7 +2,7 @@ from random import random
 from math import sqrt, ceil
 
 def punto(x1,y1):
-    return(((x1[0] + y1[0])/2), ((x1[1] + y1[1])/2)+.005)
+    return(((x1[0] + y1[0])/2)-.005, ((x1[1] + y1[1])/2)+.005)
 
 class Grafo:
 
@@ -27,7 +27,7 @@ class Grafo:
             for (x2,y2) in self.nodos:
                 d=sqrt(((y2-y1)**2)+((x2-x1)**2))
                 if d==0:
-                    self.dis.append(d)
+                    self.dis.append(20)
                 else:
                     if d in self.dis:
                         self.dis.append(20)
@@ -57,11 +57,11 @@ class Grafo:
 
     def graficar(self, di, pesos):
         with open("DirPeso.plot","w") as archivo:
-             print("set term eps", file=archivo)
-             print("set output 'DirPeso.eps'", file=archivo)
-             print("set xrange [0:1]", file=archivo)
-             print("set yrange [0:1]", file=archivo)
-             print("set pointsize 1.5", file=archivo)
+             print("set term pdf", file=archivo)
+             print("set output 'DirPeso.pdf'", file=archivo)
+             print("set xrange [-.1:1.1]", file=archivo)
+             print("set yrange [-.1:1.1]", file=archivo)
+             print("set pointsize .7", file=archivo)
              print("set size square", file=archivo)
              print("set key off", file=archivo)
              num=0
@@ -74,7 +74,7 @@ class Grafo:
                  if pesos is 1:
                     p = self.peso[num]
                     (kp, rp) = self.vector[num]
-                    print("set label font ',10' '{:d}' at {:f},{:f} tc rgb 'brown'".format(p, kp, rp),file = archivo)
+                    print("set label font ',11' '{:d}' at {:f},{:f} tc rgb 'brown'".format(p, kp, rp),file = archivo)
                  num+=1
              print("show arrow", file=archivo)
              print("plot 'DirPesoNodos.dat' using 1:2 with points pt 7 lc 6", file=archivo)
@@ -82,7 +82,7 @@ class Grafo:
 
              
 
-i=10 #Cantidad de nodos que va a tener el grafo
+i=40 #Cantidad de nodos que va a tener el grafo
 G = Grafo()
 G.agrega(i)
 G.distancia()
