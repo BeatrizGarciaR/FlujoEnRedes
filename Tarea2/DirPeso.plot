@@ -5,6 +5,24 @@ set yrange [-.1:1.1]
 set pointsize .7
 set size square
 set key off
+<<<<<<< HEAD
+set arrow 1 from 0.505160, 0.171810 to 0.767536, 0.054598 head filled lw 1
+set label font ',10' '4' at 0.636348,0.118204 tc rgb 'brown'
+set arrow 2 from 0.767536, 0.054598 to 0.809192, 0.061759 head filled lw 1
+set label font ',10' '1' at 0.788364,0.063178 tc rgb 'brown'
+set arrow 3 from 0.069817, 0.625948 to 0.197458, 0.453824 head filled lw 1
+set label font ',10' '9' at 0.133637,0.544886 tc rgb 'brown'
+set arrow 4 from 0.060070, 0.088246 to 0.197458, 0.453824 head filled lw 1
+set label font ',10' '3' at 0.128764,0.276035 tc rgb 'brown'
+set arrow 5 from 0.620648, 0.555823 to 0.469964, 0.464118 head filled lw 1
+set label font ',10' '3' at 0.545306,0.514971 tc rgb 'brown'
+set arrow 6 from 0.197458, 0.453824 to 0.342958, 0.461062 head filled lw 1
+set label font ',10' '9' at 0.270208,0.462443 tc rgb 'brown'
+set arrow 7 from 0.074584, 0.896562 to 0.069817, 0.625948 head filled lw 1
+set label font ',10' '7' at 0.072200,0.766255 tc rgb 'brown'
+set arrow 8 from 0.469964, 0.464118 to 0.342958, 0.461062 head filled lw 1
+set label font ',10' '1' at 0.406461,0.467590 tc rgb 'brown'
+=======
 set arrow 1 from 0.831211, 0.736654 to 0.829482, 0.717936 head filled lw 1
 set label font ',11' '9' at 0.825346,0.732295 tc rgb 'brown'
 set arrow 2 from 0.427676, 0.908748 to 0.496274, 0.964432 head filled lw 1
@@ -63,6 +81,7 @@ set arrow 28 from 0.019069, 0.249538 to 0.122763, 0.265343 head filled lw 1
 set label font ',11' '10' at 0.065916,0.262441 tc rgb 'brown'
 set arrow 29 from 0.189303, 0.485142 to 0.102482, 0.408878 head filled lw 1
 set label font ',11' '9' at 0.140893,0.452010 tc rgb 'brown'
+>>>>>>> 09b1a3a0c923cbd9a979fa0e1604a8f6b880fb10
 show arrow
 plot 'DirPesoNodos.dat' using 1:2 with points pt 7 lc 6
 quit()
