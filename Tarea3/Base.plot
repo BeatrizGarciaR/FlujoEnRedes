@@ -5,46 +5,28 @@ set yrange [-.1:1.1]
 set pointsize .7
 set size square
 set key off
-set arrow 1 from 0.257264, 0.448513 to 0.170624, 0.566459 nohead filled lw 1
-set label font ',11' '3' at 0.208944,0.512486 tc rgb 'brown'
-set arrow 2 from 0.115332, 0.815517 to 0.100860, 0.818580 nohead filled lw 1
-set label font ',11' '3' at 0.103096,0.822048 tc rgb 'brown'
-set arrow 3 from 0.233325, 0.992729 to 0.283558, 0.992315 nohead filled lw 1
-set label font ',11' '2' at 0.253441,0.997522 tc rgb 'brown'
-set arrow 4 from 0.712346, 0.644825 to 0.646238, 0.658399 nohead filled lw 1
-set label font ',11' '1' at 0.674292,0.656612 tc rgb 'brown'
-set arrow 5 from 0.850053, 0.883339 to 0.918652, 0.779227 nohead filled lw 1
-set label font ',11' '10' at 0.879352,0.836283 tc rgb 'brown'
-set arrow 6 from 0.296055, 0.037814 to 0.145180, 0.042019 nohead filled lw 1
-set label font ',11' '4' at 0.215617,0.044917 tc rgb 'brown'
-set arrow 7 from 0.856116, 0.411036 to 0.888383, 0.289685 nohead filled lw 1
-set label font ',11' '1' at 0.867250,0.355361 tc rgb 'brown'
-set arrow 8 from 0.506350, 0.965317 to 0.596459, 0.888741 nohead filled lw 1
-set label font ',11' '4' at 0.546404,0.932029 tc rgb 'brown'
-set arrow 9 from 0.091862, 0.392360 to 0.218469, 0.292653 nohead filled lw 1
-set label font ',11' '2' at 0.150166,0.347506 tc rgb 'brown'
-set arrow 10 from 0.218469, 0.292653 to 0.254987, 0.254335 nohead filled lw 1
-set label font ',11' '10' at 0.231728,0.278494 tc rgb 'brown'
-set arrow 11 from 0.587799, 0.427972 to 0.646238, 0.658399 nohead filled lw 1
-set label font ',11' '1' at 0.612019,0.548185 tc rgb 'brown'
-set arrow 12 from 0.257264, 0.448513 to 0.506350, 0.965317 nohead filled lw 1
-set label font ',11' '5' at 0.376807,0.711915 tc rgb 'brown'
-set arrow 13 from 0.115332, 0.815517 to 0.850053, 0.883339 nohead filled lw 1
-set label font ',11' '10' at 0.477693,0.854428 tc rgb 'brown'
-set arrow 14 from 0.100860, 0.818580 to 0.257264, 0.448513 nohead filled lw 1
-set label font ',11' '4' at 0.174062,0.638547 tc rgb 'brown'
-set arrow 15 from 0.233325, 0.992729 to 0.506350, 0.965317 nohead filled lw 1
-set label font ',11' '8' at 0.364837,0.984023 tc rgb 'brown'
-set arrow 16 from 0.712346, 0.644825 to 0.850053, 0.883339 nohead filled lw 1
-set label font ',11' '9' at 0.776200,0.769082 tc rgb 'brown'
-set arrow 17 from 0.850053, 0.883339 to 0.100860, 0.818580 nohead filled lw 1
-set label font ',11' '5' at 0.470457,0.855959 tc rgb 'brown'
-set arrow 18 from 0.296055, 0.037814 to 0.850053, 0.883339 nohead filled lw 1
-set label font ',11' '2' at 0.568054,0.465577 tc rgb 'brown'
-set arrow 19 from 0.856116, 0.411036 to 0.115332, 0.815517 nohead filled lw 1
-set label font ',11' '5' at 0.480724,0.618276 tc rgb 'brown'
-set arrow 20 from 0.888383, 0.289685 to 0.712346, 0.644825 nohead filled lw 1
-set label font ',11' '1' at 0.795365,0.472255 tc rgb 'brown'
+set arrow 1 from 0.983780, 0.017578 to 0.601307, 0.251783 nohead filled lw 1
+set label font ',11' '6' at 0.787543,0.139680 tc rgb 'brown'
+set arrow 2 from 0.143543, 0.146286 to 0.201784, 0.408094 nohead filled lw 1
+set label font ',11' '1' at 0.167664,0.282190 tc rgb 'brown'
+set arrow 3 from 0.052344, 0.444613 to 0.201784, 0.408094 nohead filled lw 1
+set label font ',11' '6' at 0.122064,0.431354 tc rgb 'brown'
+set arrow 4 from 0.846932, 0.952968 to 0.591090, 0.807505 nohead filled lw 1
+set label font ',11' '2' at 0.714011,0.885236 tc rgb 'brown'
+set arrow 5 from 0.601307, 0.251783 to 0.201784, 0.408094 nohead filled lw 1
+set label font ',11' '3' at 0.396546,0.334939 tc rgb 'brown'
+set arrow 6 from 0.591090, 0.807505 to 0.481763, 0.826619 nohead filled lw 1
+set label font ',11' '8' at 0.531426,0.822062 tc rgb 'brown'
+set arrow 7 from 0.983780, 0.017578 to 0.846932, 0.952968 nohead filled lw 1
+set label font ',11' '3' at 0.910356,0.490273 tc rgb 'brown'
+set arrow 8 from 0.143543, 0.146286 to 0.601307, 0.251783 nohead filled lw 1
+set label font ',11' '6' at 0.367425,0.204035 tc rgb 'brown'
+set arrow 9 from 0.052344, 0.444613 to 0.591090, 0.807505 nohead filled lw 1
+set label font ',11' '9' at 0.316717,0.631059 tc rgb 'brown'
+set arrow 10 from 0.846932, 0.952968 to 0.601307, 0.251783 nohead filled lw 1
+set label font ',11' '8' at 0.719120,0.607375 tc rgb 'brown'
+set arrow 11 from 0.601307, 0.251783 to 0.591090, 0.807505 nohead filled lw 1
+set label font ',11' '7' at 0.591198,0.534644 tc rgb 'brown'
 show arrow
 plot 'Base.dat' using 1:2 with points pt 7 lc 6
 quit()

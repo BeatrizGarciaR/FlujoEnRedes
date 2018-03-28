@@ -14,9 +14,10 @@ class Grafo:
         self.dismin = []
         self.peso = []
         self.vector = []
+        self.aristasdict = dict()
 
     def agrega(self, n):
-        with open("Base.dat", "w") as crear:
+        with open("Tarea3.dat", "w") as crear:
             for t in range(n):
                 x=random()
                 y=random()
@@ -51,37 +52,42 @@ class Grafo:
                 a1=self.nodos[self.dismin.index(min(self.dismin))][0]
                 b1=self.nodos[self.dismin.index(min(self.dismin))][1]
                 self.aristas.append((x1,y1,a1,b1))
+                #La linea sig. es para hacer aristas un dict con pesos cuando no hay dirección
+                self.aristasdict[(x1,y1),(a1,b1)] = randint(1,10)
                 self.peso.append(randint(1,10))
                 self.vector.append(punto((x1,y1),(a1,b1)))
                 self.dis.remove(min(self.dismin))
 
-    def conectaOrdenado(self):
+    def conectaAleatorio(self):
         sig = 0
-        rand = randint(0,10)
+        rand = randint(0,i-1)
         for(x1,y1) in self.nodos[0:rand]:
-            sig = randint(0,10)
+            sig = randint(0,i-1)
             w1 = self.nodos[sig][0]
             w2 = self.nodos[sig][1]
             if x1 == w1 and y1 == w2:
-                sig = randint(0,10)
+                sig = randint(0,i-1)
                 w1 = self.nodos[sig][0]
                 w2 = self.nodos[sig][1]
                 self.aristas.append((x1,y1,w1,w2))
+                #aqui se agregó el dict
+                self.aristasdict[(x1,y1),(w1,w2)] = randint(1,10)
                 if (x1,y1,w1,w2) in self.aristas and (w1,w2,x1,y1) in self.aristas:
                     pesoarista = G.peso[G.aristas.index((w1,w2,x1,y1))]
                     self.peso.append(pesoarista)
                     self.vector.append(punto((x1,y1),(w1,w2)))
                 else:
-                    self.peso.append(randint(1,10))
+                    self.peso.append(randint(0,i-1))
                     self.vector.append(punto((x1,y1),(w1,w2)))
             else:
                 self.aristas.append((x1,y1,w1,w2))
+                self.aristasdict[(x1,y1),(w1,w2)] = randint(1,10)
                 if (x1,y1,w1,w2) in self.aristas and (w1,w2,x1,y1) in self.aristas:
                     pesoarista = G.peso[G.aristas.index((w1,w2,x1,y1))]
                     self.peso.append(pesoarista)
                     self.vector.append(punto((x1,y1),(w1,w2)))
                 else:
-                    self.peso.append(randint(1,10))
+                    self.peso.append(randint(0,i-1))
                     self.vector.append(punto((x1,y1),(w1,w2)))
             
         
@@ -118,10 +124,10 @@ class Grafo:
         while len(cola) > 0:
             u = cola.pop(0)
             usados.add(u)
-            for (w, v) in self.c:
+            for (w, v) in self.aristasdict:
                 if w == u and v not in cola and v not in usados:
                     actual = self.f.get((u, v), 0)
-                    dif = self.c[(u, v)] - actual
+                    dif = self.aristasdict[(u, v)] - actual
                     if dif > 0:
                         cola.append(v)
                         camino[v] = (u, dif)
@@ -138,11 +144,12 @@ class Grafo:
         maximo = 0
         self.f = dict()
         while True:
-            self.c = self.floyd_warshall()
             aum = self.camino()
+            print(aum)
             if aum is None:
                 break # ya no hay
             incr = min(aum.values(), key = (lambda k: k[1]))[1]
+            print(incr)
             u = self.t
             while u in aum:
                 v = aum[u][0]
@@ -156,40 +163,44 @@ class Grafo:
         return maximo
 
     def graficar(self, di, pesos):
-        with open("Base.plot","w") as archivo:
+        with open("Tarea3.plot","w") as archivo:
              print("set term pdf", file=archivo)
-             print("set output 'Base.pdf'", file=archivo)
+             print("set output 'Tarea3.pdf'", file=archivo)
              print("set xrange [-.1:1.1]", file=archivo)
              print("set yrange [-.1:1.1]", file=archivo)
              print("set pointsize .7", file=archivo)
              print("set size square", file=archivo)
              print("set key off", file=archivo)
              num=0
-             for a in self.aristas:
-                 (x1,y1,x2,y2)=a
+             for key in self.aristasdict:
+                 x1 = key[0][0]
+                 y1 = key[0][1]
+                 x2 = key[1][0]
+                 y2 = key[1][1]
                  if di is 1:
-                    print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} head filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
+                    print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
                  else:
                     print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
+                
                  if pesos is 1:
-                    p = self.peso[num]
+                    p = self.aristasdict[key]
                     (kp, rp) = self.vector[num]
                     print("set label font ',11' '{:d}' at {:f},{:f} tc rgb 'brown'".format(p, kp, rp),file = archivo)
                  num+=1
              print("show arrow", file=archivo)
-             print("plot 'Base.dat' using 1:2 with points pt 7 lc 6", file=archivo)
+             print("plot 'Tarea3.dat' using 1:2 with points pt 7 lc 6", file=archivo)
              print("quit()",file=archivo)
 
              
 
-i = 20 #Cantidad de nodos que va a tener el grafo
+i = 8 #Cantidad de nodos que va a tener el grafo
 G = Grafo()
 G.agrega(i)
 G.distancia()
 G.conecta()
-G.conectaOrdenado()
+G.conectaAleatorio()
 G.floyd_warshall()
 G.ford_fulkerson()
-G.graficar(di=1, pesos=1) #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
+G.graficar(di=0, pesos=1) #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
                           #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
 
