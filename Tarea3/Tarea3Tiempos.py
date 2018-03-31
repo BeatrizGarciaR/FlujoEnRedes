@@ -1,6 +1,7 @@
 from random import random
 from math import sqrt, ceil
 from random import randint, uniform,random
+import time 
 
 def punto(x1,y1):
     return(((x1[0] + y1[0])/2)-.005, ((x1[1] + y1[1])/2)+.005)
@@ -9,15 +10,13 @@ class Grafo:
 
     def __init__(self):
         self.nodos = []
-        self.aristas= []
         self.dis = []
         self.dismin = []
-        self.peso = []
         self.vector = []
         self.aristasdict = dict()
 
     def agrega(self, n):
-        with open("Tarea3.dat", "w") as crear:
+        with open("Tarea3Tiempos.dat", "w") as crear:
             for t in range(n):
                 x=random()
                 y=random()
@@ -51,17 +50,13 @@ class Grafo:
             if min(self.dismin) in self.dis:
                 a1=self.nodos[self.dismin.index(min(self.dismin))][0]
                 b1=self.nodos[self.dismin.index(min(self.dismin))][1]
-                self.aristas.append((x1,y1,a1,b1))
-                #La linea sig. es para hacer aristas un dict con pesos cuando no hay dirección
                 self.aristasdict[(x1,y1),(a1,b1)] = randint(1,10)
-                self.peso.append(randint(1,10))
                 self.vector.append(punto((x1,y1),(a1,b1)))
                 self.dis.remove(min(self.dismin))
 
     def conectaAleatorio(self):
         sig = 0
-        rand = randint(0,i-1)
-        print(rand)
+        rand = ceil(i*(95/100))
         for(x1,y1) in self.nodos[0:rand]:
             sig = randint(0,i-1)
             w1 = self.nodos[sig][0]
@@ -70,25 +65,16 @@ class Grafo:
                 sig = randint(0,i-1)
                 w1 = self.nodos[sig][0]
                 w2 = self.nodos[sig][1]
-                self.aristas.append((x1,y1,w1,w2))
-                #aqui se agregó el dict
                 self.aristasdict[(x1,y1),(w1,w2)] = randint(1,10)
-                if (x1,y1,w1,w2) in self.aristas and (w1,w2,x1,y1) in self.aristas:
-                    pesoarista = G.peso[G.aristas.index((w1,w2,x1,y1))]
-                    self.peso.append(pesoarista)
+                if ((x1,y1),(w1,w2)) in self.aristasdict and ((w1,w2),(x1,y1)) in self.aristasdict:
                     self.vector.append(punto((x1,y1),(w1,w2)))
                 else:
-                    self.peso.append(randint(0,i-1))
                     self.vector.append(punto((x1,y1),(w1,w2)))
             else:
-                self.aristas.append((x1,y1,w1,w2))
                 self.aristasdict[(x1,y1),(w1,w2)] = randint(1,10)
-                if (x1,y1,w1,w2) in self.aristas and (w1,w2,x1,y1) in self.aristas:
-                    pesoarista = G.peso[G.aristas.index((w1,w2,x1,y1))]
-                    self.peso.append(pesoarista)
+                if ((x1,y1),(w1,w2)) in self.aristasdict and ((w1,w2),(x1,y1)) in self.aristasdict:
                     self.vector.append(punto((x1,y1),(w1,w2)))
                 else:
-                    self.peso.append(randint(0,i-1))
                     self.vector.append(punto((x1,y1),(w1,w2)))
             
         
@@ -97,10 +83,14 @@ class Grafo:
         for v in range (len(self.nodos)):
             dot = self.nodos[v]
             d[(dot, dot)] = 0 # distancia reflexiva es cero
-            for u in range (len(self.aristas)): # para vecinos, la distancia es el peso
-                p1=(self.aristas[u][0], self.aristas[u][1])
-                p2=(self.aristas[u][2], self.aristas[u][3])
-                d[(p1,p2)] = d[(p2,p1)] = self.peso[u]
+            for key in self.aristasdict: # para vecinos, la distancia es el peso
+                x1 = key[0][0]
+                y1 = key[0][1]
+                x2 = key[1][0]
+                y2 = key[1][1]
+                p1=(x1, y1)
+                p2=(x2, y2)
+                d[(p1,p2)] = d[(p2,p1)] = self.aristasdict[key]
 
         for intermedio in range (len(self.nodos)):
             for desde in range (len(self.nodos)):
@@ -115,7 +105,9 @@ class Grafo:
                         c = di + ih # largo del camino via "i"
                         if (self.nodos[desde], self.nodos[hasta]) not in d or c < d[(self.nodos[desde], self.nodos[hasta])]:
                             d[(self.nodos[desde], self.nodos[hasta])] = c # mejora al camino actual
-   
+
+        with open("Warshall.dat", "at") as archivo:
+            print(d, file=archivo)
         return d
 
     def camino(self): # construcción de un camino aumentante
@@ -158,13 +150,14 @@ class Grafo:
                 self.f[(u, v)] = inverso - incr
                 u = v
             maximo += incr
-        print(maximo)
+        with open("Fulkerson.dat", "at") as archivo:
+            print(maximo, file=archivo)
         return maximo
 
     def graficar(self, di, pesos):
-        with open("Tarea3.plot","w") as archivo:
+        with open("Tarea3Tiempos.plot","w") as archivo:
              print("set term pdf", file=archivo)
-             print("set output 'Tarea3.pdf'", file=archivo)
+             print("set output 'Tarea3Tiempos.pdf'", file=archivo)
              print("set xrange [-.1:1.1]", file=archivo)
              print("set yrange [-.1:1.1]", file=archivo)
              print("set pointsize .7", file=archivo)
@@ -187,19 +180,40 @@ class Grafo:
                     print("set label font ',11' '{:d}' at {:f},{:f} tc rgb 'brown'".format(p, kp, rp),file = archivo)
                  num+=1
              print("show arrow", file=archivo)
-             print("plot 'Tarea3.dat' using 1:2 with points pt 7 lc 6", file=archivo)
+             print("plot 'Tarea3Tiempos.dat' using 1:2 with points pt 7 lc 6", file=archivo)
              print("quit()",file=archivo)
 
-             
 
-i = 30 #Cantidad de nodos que va a tener el grafo
-G = Grafo()
-G.agrega(i)
-G.distancia()
-G.conecta()
-G.conectaAleatorio()
-G.floyd_warshall()
-G.ford_fulkerson()
-G.graficar(di=1, pesos=1) #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
-                          #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
+di=0      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
+pesos=0   #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra         
+for n in range(1,21):
+    for j in range (0, 10):
+        if di is 0:
+            with open("TiemposNoDirigido.csv", "at") as archivo:
+                TiempoInicio = time.clock()
+                i = 5*n #Cantidad de nodos que va a tener el grafo
+                G = Grafo()
+                G.agrega(i)
+                G.distancia()
+                G.conecta()
+                G.conectaAleatorio()
+                G.floyd_warshall()
+                G.ford_fulkerson()
+                G.graficar(di,pesos)
+                print(time.clock() - TiempoInicio, file=archivo)
+        if di is 1:
+            with open("TiemposDirigido.csv", "at") as archivo:
+                TiempoInicio = time.clock()
+                i = 5*n #Cantidad de nodos que va a tener el grafo
+                G = Grafo()
+                G.agrega(i)
+                G.distancia()
+                G.conecta()
+                G.conectaAleatorio()
+                G.floyd_warshall()
+                G.ford_fulkerson()
+                G.graficar(di,pesos)
+                print(time.clock() - TiempoInicio, file=archivo)
+    print(n)
+
 
