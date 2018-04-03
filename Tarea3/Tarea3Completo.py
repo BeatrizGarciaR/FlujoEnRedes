@@ -9,10 +9,9 @@ class Grafo:
 
     def __init__(self):
         self.nodos = set()
-        self.dis = []
-        self.dismin = dict()
+        self.dis = dict()
         self.vecinos = dict()
-        self.aristasdict = dict()
+        self.aristas = dict()
 
 
     def agrega(self, n):
@@ -31,12 +30,13 @@ class Grafo:
             for (x2,y2) in self.nodos:
                 d=sqrt(((y2-y1)**2)+((x2-x1)**2))
                 if d==0:
-                    self.dis.append(20)
+                    self.dis[(x1,y1),(x2,y2)] = 20
                 else:
                     if d in self.dis:
-                        self.dis.append(20)
+                        self.dis[(x1,y1),(x2,y2)] = 20
                     else:
-                        self.dis.append(d)
+                        self.dis[(x1,y1),(x2,y2)] = d
+        print(len(self.dis))
 
     #Modificado, listo, creo
     def conectaDir(self):
@@ -45,31 +45,53 @@ class Grafo:
                 dm = sqrt(((y2-y1)**2)+((x2-x1)**2))
                 if dm == min(self.dis):
                     if pesos is 0:
-                        self.aristasdict[(x1,y1),(x2,y2)] = pesos
+                        self.aristas[(x1,y1),(x2,y2)] = pesos
                         self.vecinos[(x1,y1)].add((x2,y2))
                     else:
-                        self.aristasdict[(x1,y1),(x2,y2)] = randint(1,10)
+                        self.aristas[(x1,y1),(x2,y2)] = randint(1,10)
                         self.vecinos[(x1,y1)].add((x2,y2))
                     self.dis.remove(min(self.dis))
                     break
 
                 
     def conecta(self):
-        #Ya está, creo
+        #NO ESTÄ LISTO
         for (x1,y1) in self.nodos:
+            print((x1,y1))
+            self.dismin = dict()
             for(x2,y2) in self.nodos:
                 dm = sqrt(((y2-y1)**2)+((x2-x1)**2))
-                if dm == min(self.dis):
-                    if pesos is 0:
-                        self.aristasdict[(x1,y1),(x2,y2)] = self.aristasdict[(x2,y2),(x1,y1)] = pesos
-                        self.vecinos[(x1,y1)].add((x2,y2))
-                        self.vecinos[(x2,y2)].add((x1,y1))
+                if dm == 0:
+                    self.dismin[(x1,y1),(x2,y2)] = 20
+                else:
+                    if dm in self.dismin:
+                        self.dismin[(x1,y1),(x2,y2)] = 20
                     else:
-                        self.aristasdict[(x1,y1),(x2,y2)] = self.aristasdict[(x2,y2),(x1,y1)] = randint(1,10)
-                        self.vecinos[(x1,y1)].add((x2,y2))
-                        self.vecinos[(x2,y2)].add((x1,y1))
-                    self.dis.remove(min(self.dis))
-                    break
+                        self.dismin[(x1,y1),(x2,y2)] = dm
+            minimo = min(self.dismin.values())
+            print(minimo)
+            lis = []
+            if minimo in self.dis.values():
+                items = list(self.dismin.items())
+                for k in range (len(self.dismin)):
+                    lis.append(items[k][1])
+                print(lis)
+                print(lis.index(min(self.dismin.values())))
+                print(items[lis.index(min(self.dismin.values()))][0][1])
+                u = items[lis.index(min(self.dismin.values()))][0][1]
+                if pesos is 0:
+                  self.aristas[((x1,y1),u)] = self.aristas[(u,(x1,y1))] = pesos
+                  self.vecinos[(x1,y1)].add(u)
+                  self.vecinos[u].add((x1,y1))
+                else:
+                  self.aristas[((x1,y1),u)] = self.aristas[(u,(x1,y1))] = randint(1,10)
+                  self.vecinos[(x1,y1)].add(u)
+                  self.vecinos[u].add((x1,y1))
+                del(self.dis[((x1,y1),u)])
+                del(self.dis[(u,(x1,y1))])
+        print(len(self.dis))
+        #print(self.aristas)
+                    
         
 
     def conectaAleatorioDir(self):
@@ -82,17 +104,17 @@ class Grafo:
             if v == u:
                 u = random.sample(self.nodos,1)[0]
                 if pesos is 0:
-                    self.aristasdict[(v,u)] = pesos
+                    self.aristas[(v,u)] = pesos
                     self.vecinos[v].add(u)
                 else:
-                    self.aristasdict[(v,u)] = randint(1,10)
+                    self.aristas[(v,u)] = randint(1,10)
                     self.vecinos[v].add(u)
             else:
                 if pesos is 0:
-                    self.aristasdict[(v,u)] = pesos
+                    self.aristas[(v,u)] = pesos
                     self.vecinos[v].add(u)
                 else:
-                    self.aristasdict[(v,u)] = randint(1,10)
+                    self.aristas[(v,u)] = randint(1,10)
                     self.vecinos[v].add(u)
 
     def conectaAleatorio(self):
@@ -105,20 +127,20 @@ class Grafo:
             if v == u:
                 u = random.sample(self.nodos,1)[0]
                 if pesos is 0:
-                    self.aristasdict[(v,u)] = self.aristasdict[(u,v)] = pesos
+                    self.aristas[(v,u)] = self.aristas[(u,v)] = pesos
                     self.vecinos[v].add(u)
                     self.vecinos[u].add(v)
                 else:
-                    self.aristasdict[(v,u)] = self.aristasdict[(u,v)] = randint(1,10)
+                    self.aristas[(v,u)] = self.aristas[(u,v)] = randint(1,10)
                     self.vecinos[v].add(u)
                     self.vecinos[u].add(v)
             else:
                 if pesos is 0:
-                    self.aristasdict[(v,u)] = self.aristasdict[(u,v)] = pesos
+                    self.aristas[(v,u)] = self.aristas[(u,v)] = pesos
                     self.vecinos[v].add(u)
                     self.vecinos[u].add(v)
                 else:
-                    self.aristasdict[(v,u)] = self.aristasdict[(u,v)] = randint(1,10)
+                    self.aristas[(v,u)] = self.aristas[(u,v)] = randint(1,10)
                     self.vecinos[v].add(u)
                     self.vecinos[u].add(v)
 
@@ -128,7 +150,7 @@ class Grafo:
         for v in self.nodos:
             d[(v,v)] = 0 # distancia reflexiva es cero
             for u in self.vecinos[v]: # para vecinos, la distancia es el peso
-                d[(v,u)] = G.aristasdict[(v,u)]
+                d[(v,u)] = G.aristas[(v,u)]
         for intermedio in self.nodos:
             for desde in self.nodos:
                 for hasta in self.nodos:
@@ -154,10 +176,10 @@ class Grafo:
         while len(cola) > 0:
             u = cola.pop(0)
             usados.add(u)
-            for (w, v) in self.aristasdict:
+            for (w, v) in self.aristas:
                 if w == u and v not in cola and v not in usados:
                     actual = self.f.get((u, v), 0)
-                    dif = self.aristasdict[(u, v)] - actual
+                    dif = self.aristas[(u, v)] - actual
                     if dif > 0:
                         cola.append(v)
                         camino[v] = (u, dif)
@@ -202,7 +224,7 @@ class Grafo:
              print("set size square", file=archivo)
              print("set key off", file=archivo)
              num=0
-             for key in self.aristasdict:
+             for key in self.aristas:
                  x1 = key[0][0]
                  y1 = key[0][1]
                  x2 = key[1][0]
@@ -211,9 +233,9 @@ class Grafo:
                     print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
                  else:
                     print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
-
+                #Ese if no está bien
                  if pesos is 1:
-                    p = self.aristasdict[key]
+                    p = self.aristas[key]
                     (kp, rp) = self.vector[num]
                     print("set label font ',11' '{:d}' at {:f},{:f} tc rgb 'brown'".format(p, kp, rp),file = archivo)
                  num+=1
@@ -222,7 +244,7 @@ class Grafo:
              print("quit()",file=archivo)
 
 
-di = 1      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
+di = 0      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
 pesos = 0   #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
 #for n in range(1,21):
 #    for j in range (0, 10):
