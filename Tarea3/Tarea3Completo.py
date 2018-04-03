@@ -1,0 +1,255 @@
+from random import random
+from math import sqrt, ceil
+from random import randint, uniform, random
+import time
+
+#Falta definir cómo se van a graficar las ponderaciones y hacer bien las flechas dirigidas
+
+class Grafo:
+
+    def __init__(self):
+        self.nodos = set()
+        self.dis = []
+        self.dismin = dict()
+        self.vecinos = dict()
+        self.aristasdict = dict()
+
+
+    def agrega(self, n):
+        with open("Tarea3Completo.dat", "w") as crear:
+            for t in range(n):
+                x = random()
+                y = random()
+                self.nodos.add((x,y))
+                print (x,y,file=crear)
+                if not (x,y) in self.vecinos:
+                    self.vecinos[(x,y)] = set()
+
+
+    def distancia(self):
+        for (x1,y1) in self.nodos:
+            for (x2,y2) in self.nodos:
+                d=sqrt(((y2-y1)**2)+((x2-x1)**2))
+                if d==0:
+                    self.dis.append(20)
+                else:
+                    if d in self.dis:
+                        self.dis.append(20)
+                    else:
+                        self.dis.append(d)
+
+    #Modificado, listo, creo
+    def conectaDir(self):
+        for (x1,y1) in self.nodos:
+            for(x2,y2) in self.nodos:
+                dm = sqrt(((y2-y1)**2)+((x2-x1)**2))
+                if dm == min(self.dis):
+                    if pesos is 0:
+                        self.aristasdict[(x1,y1),(x2,y2)] = pesos
+                        self.vecinos[(x1,y1)].add((x2,y2))
+                    else:
+                        self.aristasdict[(x1,y1),(x2,y2)] = randint(1,10)
+                        self.vecinos[(x1,y1)].add((x2,y2))
+                    self.dis.remove(min(self.dis))
+                    break
+
+                
+    def conecta(self):
+        #Ya está, creo
+        for (x1,y1) in self.nodos:
+            for(x2,y2) in self.nodos:
+                dm = sqrt(((y2-y1)**2)+((x2-x1)**2))
+                if dm == min(self.dis):
+                    if pesos is 0:
+                        self.aristasdict[(x1,y1),(x2,y2)] = self.aristasdict[(x2,y2),(x1,y1)] = pesos
+                        self.vecinos[(x1,y1)].add((x2,y2))
+                        self.vecinos[(x2,y2)].add((x1,y1))
+                    else:
+                        self.aristasdict[(x1,y1),(x2,y2)] = self.aristasdict[(x2,y2),(x1,y1)] = randint(1,10)
+                        self.vecinos[(x1,y1)].add((x2,y2))
+                        self.vecinos[(x2,y2)].add((x1,y1))
+                    self.dis.remove(min(self.dis))
+                    break
+        
+
+    def conectaAleatorioDir(self):
+        #Ya está listo esto, creo
+        import random
+        rand = ceil(i*(95/100))
+        for j in range (rand):
+            v = random.sample(self.nodos,1)[0]
+            u = random.sample(self.nodos,1)[0]
+            if v == u:
+                u = random.sample(self.nodos,1)[0]
+                if pesos is 0:
+                    self.aristasdict[(v,u)] = pesos
+                    self.vecinos[v].add(u)
+                else:
+                    self.aristasdict[(v,u)] = randint(1,10)
+                    self.vecinos[v].add(u)
+            else:
+                if pesos is 0:
+                    self.aristasdict[(v,u)] = pesos
+                    self.vecinos[v].add(u)
+                else:
+                    self.aristasdict[(v,u)] = randint(1,10)
+                    self.vecinos[v].add(u)
+
+    def conectaAleatorio(self):
+        #Cambiar como conectaAleatorioDir
+        import random
+        rand = ceil(i*(95/100))
+        for j in range (rand):
+            v = random.sample(self.nodos,1)[0]
+            u = random.sample(self.nodos,1)[0]
+            if v == u:
+                u = random.sample(self.nodos,1)[0]
+                if pesos is 0:
+                    self.aristasdict[(v,u)] = self.aristasdict[(u,v)] = pesos
+                    self.vecinos[v].add(u)
+                    self.vecinos[u].add(v)
+                else:
+                    self.aristasdict[(v,u)] = self.aristasdict[(u,v)] = randint(1,10)
+                    self.vecinos[v].add(u)
+                    self.vecinos[u].add(v)
+            else:
+                if pesos is 0:
+                    self.aristasdict[(v,u)] = self.aristasdict[(u,v)] = pesos
+                    self.vecinos[v].add(u)
+                    self.vecinos[u].add(v)
+                else:
+                    self.aristasdict[(v,u)] = self.aristasdict[(u,v)] = randint(1,10)
+                    self.vecinos[v].add(u)
+                    self.vecinos[u].add(v)
+
+
+    def floyd_warshall(self):
+        d = {}
+        for v in self.nodos:
+            d[(v,v)] = 0 # distancia reflexiva es cero
+            for u in self.vecinos[v]: # para vecinos, la distancia es el peso
+                d[(v,u)] = G.aristasdict[(v,u)]
+        for intermedio in self.nodos:
+            for desde in self.nodos:
+                for hasta in self.nodos:
+                    di = None
+                    if (desde, intermedio) in d:
+                        di = d[(desde, intermedio)]
+                    ih = None
+                    if (intermedio, hasta) in d:
+                        ih = d[(intermedio, hasta)]
+                    if di is not None and ih is not None:
+                        c = di + ih # largo del camino via "i"
+                        if (desde, hasta) not in d or c < d[(desde, hasta)]:
+                            d[(desde, hasta)] = c # mejora al camino actual
+
+        with open("WarshallCompleto.dat", "at") as archivo:
+            print(d, file=archivo)
+        return d
+
+    def camino(self): # construcción de un camino aumentante
+        cola = [self.s]
+        usados = set()
+        camino = dict()
+        while len(cola) > 0:
+            u = cola.pop(0)
+            usados.add(u)
+            for (w, v) in self.aristasdict:
+                if w == u and v not in cola and v not in usados:
+                    actual = self.f.get((u, v), 0)
+                    dif = self.aristasdict[(u, v)] - actual
+                    if dif > 0:
+                        cola.append(v)
+                        camino[v] = (u, dif)
+        if self.t in usados:
+           return camino
+        else: # no se alcanzó
+            return None
+
+    def ford_fulkerson(self): # algoritmo de Ford y Fulkerson
+        import random
+        self.s = random.sample(self.nodos,1)[0]
+        self.t = random.sample(self.nodos,1)[0]
+        if self.s == self.t:
+            return 0
+        maximo = 0
+        self.f = dict()
+        while True:
+            aum = self.camino()
+            if aum is None:
+                break # ya no hay
+            incr = min(aum.values(), key = (lambda k: k[1]))[1]
+            u = self.t
+            while u in aum:
+                v = aum[u][0]
+                actual = self.f.get((v, u), 0) # cero si no hay
+                inverso = self.f.get((u, v), 0)
+                self.f[(v, u)] = actual + incr
+                self.f[(u, v)] = inverso - incr
+                u = v
+            maximo += incr
+        with open("FulkersonCompleto.dat", "at") as archivo:
+            print(maximo, file=archivo)
+        return maximo
+
+    def graficar(self, di, pesos):
+        with open("Tarea3Completo.plot","w") as archivo:
+             print("set term pdf", file=archivo)
+             print("set output 'Tarea3Completo.pdf'", file=archivo)
+             print("set xrange [-.1:1.1]", file=archivo)
+             print("set yrange [-.1:1.1]", file=archivo)
+             print("set pointsize .7", file=archivo)
+             print("set size square", file=archivo)
+             print("set key off", file=archivo)
+             num=0
+             for key in self.aristasdict:
+                 x1 = key[0][0]
+                 y1 = key[0][1]
+                 x2 = key[1][0]
+                 y2 = key[1][1]
+                 if di is 1:
+                    print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
+                 else:
+                    print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
+
+                 if pesos is 1:
+                    p = self.aristasdict[key]
+                    (kp, rp) = self.vector[num]
+                    print("set label font ',11' '{:d}' at {:f},{:f} tc rgb 'brown'".format(p, kp, rp),file = archivo)
+                 num+=1
+             print("show arrow", file=archivo)
+             print("plot 'Tarea3Completo.dat' using 1:2 with points pt 7 lc 6", file=archivo)
+             print("quit()",file=archivo)
+
+
+di = 1      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
+pesos = 0   #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
+#for n in range(1,21):
+#    for j in range (0, 10):
+if di is 0:
+    with open("TiemposNoDirigidoCompleto.csv", "at") as archivo:
+        TiempoInicio = time.clock()
+        i = 20 #Cantidad de nodos que va a tener el grafo
+        G = Grafo()
+        G.agrega(i)
+        G.distancia()
+        G.conecta()
+        G.conectaAleatorio()
+        G.floyd_warshall()
+        G.ford_fulkerson()
+        G.graficar(di,pesos)
+        print(time.clock() - TiempoInicio, file=archivo)
+if di is 1:
+    with open("TiemposDirigidoCompleto.csv", "at") as archivo:
+        TiempoInicio = time.clock()
+        i = 20 #Cantidad de nodos que va a tener el grafo
+        G = Grafo()
+        G.agrega(i)
+        G.distancia()
+        G.conectaDir()
+        G.conectaAleatorioDir()
+        G.floyd_warshall()
+        G.ford_fulkerson()
+        G.graficar(di,pesos)
+        print(time.clock() - TiempoInicio, file=archivo)
+#    print(n)
