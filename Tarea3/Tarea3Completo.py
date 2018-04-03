@@ -3,7 +3,8 @@ from math import sqrt, ceil
 from random import randint, uniform, random
 import time
 
-#Falta definir cómo se van a graficar las ponderaciones y hacer bien las flechas dirigidas
+#Falta poner leyenda de los colores
+#Falta etiquetar los nodos (al menos saber cuál es el de entrada y cuál el de salida
 
 class Grafo:
 
@@ -36,28 +37,10 @@ class Grafo:
                         self.dis[(x1,y1),(x2,y2)] = 20
                     else:
                         self.dis[(x1,y1),(x2,y2)] = d
-        print(len(self.dis))
 
-    #Modificado, listo, creo
+
     def conectaDir(self):
         for (x1,y1) in self.nodos:
-            for(x2,y2) in self.nodos:
-                dm = sqrt(((y2-y1)**2)+((x2-x1)**2))
-                if dm == min(self.dis):
-                    if pesos is 0:
-                        self.aristas[(x1,y1),(x2,y2)] = pesos
-                        self.vecinos[(x1,y1)].add((x2,y2))
-                    else:
-                        self.aristas[(x1,y1),(x2,y2)] = randint(1,10)
-                        self.vecinos[(x1,y1)].add((x2,y2))
-                    self.dis.remove(min(self.dis))
-                    break
-
-                
-    def conecta(self):
-        #NO ESTÄ LISTO
-        for (x1,y1) in self.nodos:
-            print((x1,y1))
             self.dismin = dict()
             for(x2,y2) in self.nodos:
                 dm = sqrt(((y2-y1)**2)+((x2-x1)**2))
@@ -69,15 +52,40 @@ class Grafo:
                     else:
                         self.dismin[(x1,y1),(x2,y2)] = dm
             minimo = min(self.dismin.values())
-            print(minimo)
             lis = []
             if minimo in self.dis.values():
                 items = list(self.dismin.items())
                 for k in range (len(self.dismin)):
                     lis.append(items[k][1])
-                print(lis)
-                print(lis.index(min(self.dismin.values())))
-                print(items[lis.index(min(self.dismin.values()))][0][1])
+                u = items[lis.index(min(self.dismin.values()))][0][1]
+                if pesos is 0:
+                  self.aristas[((x1,y1),u)] = pesos
+                  self.vecinos[(x1,y1)].add(u)
+                else:
+                  self.aristas[((x1,y1),u)] = randint(1,10)
+                  self.vecinos[(x1,y1)].add(u)
+                del(self.dis[((x1,y1),u)])
+
+
+                
+    def conecta(self):
+        for (x1,y1) in self.nodos:
+            self.dismin = dict()
+            for(x2,y2) in self.nodos:
+                dm = sqrt(((y2-y1)**2)+((x2-x1)**2))
+                if dm == 0:
+                    self.dismin[(x1,y1),(x2,y2)] = 20
+                else:
+                    if dm in self.dismin:
+                        self.dismin[(x1,y1),(x2,y2)] = 20
+                    else:
+                        self.dismin[(x1,y1),(x2,y2)] = dm
+            minimo = min(self.dismin.values())
+            lis = []
+            if minimo in self.dis.values():
+                items = list(self.dismin.items())
+                for k in range (len(self.dismin)):
+                    lis.append(items[k][1])
                 u = items[lis.index(min(self.dismin.values()))][0][1]
                 if pesos is 0:
                   self.aristas[((x1,y1),u)] = self.aristas[(u,(x1,y1))] = pesos
@@ -89,13 +97,10 @@ class Grafo:
                   self.vecinos[u].add((x1,y1))
                 del(self.dis[((x1,y1),u)])
                 del(self.dis[(u,(x1,y1))])
-        print(len(self.dis))
-        #print(self.aristas)
                     
         
 
     def conectaAleatorioDir(self):
-        #Ya está listo esto, creo
         import random
         rand = ceil(i*(95/100))
         for j in range (rand):
@@ -118,7 +123,6 @@ class Grafo:
                     self.vecinos[v].add(u)
 
     def conectaAleatorio(self):
-        #Cambiar como conectaAleatorioDir
         import random
         rand = ceil(i*(95/100))
         for j in range (rand):
@@ -222,30 +226,54 @@ class Grafo:
              print("set yrange [-.1:1.1]", file=archivo)
              print("set pointsize .7", file=archivo)
              print("set size square", file=archivo)
-             print("set key off", file=archivo)
              num=0
+             set1 = [1,2,3]
+             set2 = [4,5,6]
+             set3 = [7,8,9,10]
              for key in self.aristas:
-                 x1 = key[0][0]
-                 y1 = key[0][1]
-                 x2 = key[1][0]
+                 x1 = key[0][0] 
+                 y1 = key[0][1] 
+                 x2 = key[1][0] 
                  y2 = key[1][1]
                  if di is 1:
-                    print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
+                    if x1 < x2:
+                     x2 = x2 - .007
+                     if x2 < x1:
+                         x2 = x2 + .007
+                     if y1 < y2:
+                         y2 = y2 - .007
+                     if y2 < y1:
+                         y2 = y2 + .007
+                    if pesos is 0:
+                        print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled size screen 0.02,15,45 lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
+                    else:
+                        p = self.aristas[key]
+                        if p in set1:
+                            print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled size screen 0.02,15,45 lw 1.5 lc 1".format(num+1,x1,y1,x2,y2),file=archivo)
+                        if p in set2:
+                            print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled size screen 0.02,15,45 lw 1.5 lc 2".format(num+1,x1,y1,x2,y2),file=archivo)
+                        if p in set3:
+                            print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled size screen 0.02,15,45 lw 1.5 lc 6".format(num+1,x1,y1,x2,y2),file=archivo)
                  else:
-                    print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
-                #Ese if no está bien
-                 if pesos is 1:
-                    p = self.aristas[key]
-                    (kp, rp) = self.vector[num]
-                    print("set label font ',11' '{:d}' at {:f},{:f} tc rgb 'brown'".format(p, kp, rp),file = archivo)
+                     if pesos is 0:
+                        print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
+                     else:
+                        p = self.aristas[key]
+                        if p in set1:
+                            print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1.5 lc 1".format(num+1,x1,y1,x2,y2),file=archivo)
+                        if p in set2:
+                            print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1.5 lc 2".format(num+1,x1,y1,x2,y2),file=archivo)
+                        if p in set3:
+                            print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1.5 lc 6".format(num+1,x1,y1,x2,y2),file=archivo)        
                  num+=1
+             print("set key off", file=archivo)
              print("show arrow", file=archivo)
-             print("plot 'Tarea3Completo.dat' using 1:2 with points pt 7 lc 6", file=archivo)
+             print("plot 'Tarea3Completo.dat' using 1:2 with points pt 7 lc 8", file=archivo)
              print("quit()",file=archivo)
 
 
 di = 0      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
-pesos = 0   #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
+pesos = 1   #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
 #for n in range(1,21):
 #    for j in range (0, 10):
 if di is 0:
