@@ -16,14 +16,25 @@ class Grafo:
 
 
     def agrega(self, n):
+        for t in range(n):
+            x = random()
+            y = random()
+            self.nodos.add((x,y))
+            if not (x,y) in self.vecinos:
+                self.vecinos[(x,y)] = set()
+
+    def guarda(self):
         with open("Tarea3Completo.dat", "w") as crear:
-            for t in range(n):
-                x = random()
-                y = random()
-                self.nodos.add((x,y))
-                print (x,y,file=crear)
-                if not (x,y) in self.vecinos:
-                    self.vecinos[(x,y)] = set()
+            import random
+            self.s = random.sample(self.nodos,1)[0]
+            self.t = random.sample(self.nodos,1)[0]
+            for nodos in self.nodos:
+                if nodos == self.s:
+                    print(self.s[0],self.s[1],4, file=crear)
+                if nodos == self.t:
+                    print(self.t[0],self.t[1],7, file=crear)
+                if nodos is not self.s and nodos is not self.t:
+                    print(nodos[0],nodos[1],8, file=crear)
 
 
     def distancia(self):
@@ -194,8 +205,6 @@ class Grafo:
 
     def ford_fulkerson(self): # algoritmo de Ford y Fulkerson
         import random
-        self.s = random.sample(self.nodos,1)[0]
-        self.t = random.sample(self.nodos,1)[0]
         if self.s == self.t:
             return 0
         maximo = 0
@@ -226,6 +235,7 @@ class Grafo:
              print("set yrange [-.1:1.1]", file=archivo)
              print("set pointsize .7", file=archivo)
              print("set size square", file=archivo)
+             print("set key off", file=archivo)
              num=0
              set1 = [1,2,3]
              set2 = [4,5,6]
@@ -266,13 +276,12 @@ class Grafo:
                         if p in set3:
                             print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1.5 lc 6".format(num+1,x1,y1,x2,y2),file=archivo)        
                  num+=1
-             print("set key off", file=archivo)
+             print("plot 'Tarea3Completo.dat' using 1:2:3 with points pt 7 lc var", file=archivo)
              print("show arrow", file=archivo)
-             print("plot 'Tarea3Completo.dat' using 1:2 with points pt 7 lc 8", file=archivo)
              print("quit()",file=archivo)
 
 
-di = 0      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
+di = 1      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
 pesos = 1   #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
 #for n in range(1,21):
 #    for j in range (0, 10):
@@ -282,6 +291,7 @@ if di is 0:
         i = 20 #Cantidad de nodos que va a tener el grafo
         G = Grafo()
         G.agrega(i)
+        G.guarda()
         G.distancia()
         G.conecta()
         G.conectaAleatorio()
@@ -295,6 +305,7 @@ if di is 1:
         i = 20 #Cantidad de nodos que va a tener el grafo
         G = Grafo()
         G.agrega(i)
+        G.guarda()
         G.distancia()
         G.conectaDir()
         G.conectaAleatorioDir()
