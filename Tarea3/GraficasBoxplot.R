@@ -7,7 +7,7 @@ for (i in 1:20){
 }
 print(shapiro.test(TiemposNoDirigido[,1]))
 #No es normal
-png("TiemposNoDirigidoCompleto.png")
+pdf("TiemposNoDirigidoCompleto.pdf")
 boxplot(t(TiemposNoDirigido), xaxt="n", ylim=c(0,3), xlab=c("Cantidad de nodos"), ylab=c("Tiempo en segundos"))
 axis(1, at=1:20, labels=seq(5,100,5))
 par(new=TRUE)
@@ -20,7 +20,7 @@ for (i in 1:20){
 }
 print(shapiro.test(TiemposDirigido[,1]))
 #No es normal
-png("TiemposDirigidoCompleto.png")
+pdf("TiemposDirigidoCompleto.pdf")
 boxplot(t(TiemposDirigido), xaxt="n", ylim=c(0,3), xlab=c("Cantidad de nodos"), ylab=c("Tiempo en segundos"))
 axis(1, at=1:21, labels=seq(0,100,5))
 par(new=TRUE)
