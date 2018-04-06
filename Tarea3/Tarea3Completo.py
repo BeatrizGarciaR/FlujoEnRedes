@@ -112,7 +112,7 @@ class Grafo:
 
     def conectaAleatorioDir(self):
         import random
-        rand = ceil(i*(95/100))
+        rand = ceil(i*(90/100))
         for j in range (rand):
             v = random.sample(self.nodos,1)[0]
             u = random.sample(self.nodos,1)[0]
@@ -134,7 +134,7 @@ class Grafo:
 
     def conectaAleatorio(self):
         import random
-        rand = ceil(i*(95/100))
+        rand = ceil(i*(90/100))
         for j in range (rand):
             v = random.sample(self.nodos,1)[0]
             u = random.sample(self.nodos,1)[0]
@@ -281,39 +281,40 @@ class Grafo:
 
 
 
-di = 0      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
-pesos = 0   #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
-#for n in range(1,21):
-#    for j in range (0, 10):
-if di is 0:
-    with open("TiemposNoDirigidoCompleto.csv", "at") as archivo:
-        TiempoInicio = time.clock()
-        #i = 5*n
-        i = 20 #Cantidad de nodos que va a tener el grafo
-        G = Grafo()
-        G.agrega(i)
-        G.guarda()
-        G.distancia()
-        G.conecta()
-        G.conectaAleatorio()
-        G.floyd_warshall()
-        G.ford_fulkerson()
-        G.graficar(di,pesos)
-        print(time.clock() - TiempoInicio, file=archivo)
-        
-        
-if di is 1:
-    with open("TiemposDirigidoCompleto.csv", "at") as archivo:
-        TiempoInicio = time.clock()
-        i = 20 #Cantidad de nodos que va a tener el grafo
-        G = Grafo()
-        G.agrega(i)
-        G.guarda()
-        G.distancia()
-        G.conectaDir()
-        G.conectaAleatorioDir()
-        G.floyd_warshall()
-        G.ford_fulkerson()
-        G.graficar(di,pesos)
-        print(time.clock() - TiempoInicio, file=archivo)
-#    print(n)
+di = 1      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
+pesos = 1   #Si pesos=0 el grafo no tendra ponderacion, si es 1 si lo tendra
+for n in range(1,21):
+    for j in range (0, 10):
+        if di is 0:
+            with open("TiemposNoDirigidoCompleto.csv", "at") as archivo:
+                TiempoInicio = time.clock()
+                i = 5*n
+                #i = 20 #Cantidad de nodos que va a tener el grafo
+                G = Grafo()
+                G.agrega(i)
+                G.guarda()
+                G.distancia()
+                G.conecta()
+                G.conectaAleatorio()
+                G.floyd_warshall()
+                G.ford_fulkerson()
+                G.graficar(di,pesos)
+                print(time.clock() - TiempoInicio, file=archivo)
+    
+    
+        if di is 1:
+            with open("TiemposDirigidoCompleto.csv", "at") as archivo:
+                TiempoInicio = time.clock()
+                i = 5*n
+                #i = 20 #Cantidad de nodos que va a tener el grafo
+                G = Grafo()
+                G.agrega(i)
+                G.guarda()
+                G.distancia()
+                G.conectaDir()
+                G.conectaAleatorioDir()
+                G.floyd_warshall()
+                G.ford_fulkerson()
+                G.graficar(di,pesos)
+                print(time.clock() - TiempoInicio, file=archivo)
+    print(n)
