@@ -22,16 +22,6 @@ class Grafo:
             if not (x,y) in self.vecinos:
                 self.vecinos[(x,y)] = set()
 
-    def guarda(self):
-        with open("BFS.dat", "w") as crear:
-            import random
-            self.nodoInicio = random.sample(self.nodos,1)[0]
-            for nodos in self.nodos:
-                if nodos == self.nodoInicio:
-                    print(self.nodoInicio[0],self.nodoInicio[1],4, file=crear)
-                if nodos is not self.nodoInicio:
-                    print(nodos[0],nodos[1],6, file=crear)
-
 
     def distancia(self):
         for (x1,y1) in self.nodos:
@@ -130,24 +120,30 @@ class Grafo:
                 
 
     def Breath_First_Search(self):
-        import random
-        niveles = {}
-        explorado = []
-        estado = [self.nodoInicio]         
-        niveles[self.nodoInicio]= 0    
-        visitado= [self.nodoInicio]     
-        while estado:
-            nodo = estado.pop(0)
-            explorado.append(nodo)
-            vecino = self.vecinos[nodo]
-            for vecino in vecino:
-                if vecino not in visitado:
-                    estado.append(vecino)
-                    visitado.append(vecino)
-                    niveles[vecino]= niveles[nodo]+1
-                    
-        print(niveles)
-        return explorado
+        with open ("niveles.dat", "w") as crear:
+            import random
+            self.nodoInicio = random.sample(self.nodos,1)[0]
+            self.niveles = {}
+            self.explorado = []
+            self.estado = [self.nodoInicio]         
+            self.niveles[self.nodoInicio]= 0
+            print(self.nodoInicio[0],self.nodoInicio[1],self.niveles[self.nodoInicio]+1,file=crear)
+            self.visitado= [self.nodoInicio]     
+            while self.estado:
+                self.nodo = self.estado.pop(0)
+                self.explorado.append(self.nodo)
+                self.vecino = self.vecinos[self.nodo]
+                for self.vecino in self.vecino:
+                    if self.vecino not in self.visitado:
+                        self.estado.append(self.vecino)
+                        self.visitado.append(self.vecino)
+                        self.niveles[self.vecino]= self.niveles[self.nodo]+1
+                        print(self.vecino[0],self.vecino[1],self.niveles[self.vecino]+1, file=crear)
+            for (x,y) in self.nodos:
+                if (x,y) not in self.visitado:
+                    print(x,y,0, file=crear)
+            print(self.niveles)
+            return self.explorado
 
 
     def graficar(self, di):
@@ -178,7 +174,7 @@ class Grafo:
                  else:
                      print("set arrow {:d} from {:f}, {:f} to {:f}, {:f} nohead filled lw 1".format(num+1,x1,y1,x2,y2),file=archivo)
                  num+=1
-             print("plot 'BFS.dat' using 1:2:3 with points pt 7 lc var", file=archivo)
+             print("plot 'niveles.dat' using 1:2:3 with points pt 7 lc var", file=archivo)
              print("show arrow", file=archivo)
              print("quit()",file=archivo)
 
@@ -187,10 +183,9 @@ class Grafo:
 di = 0      #Si di=0 el grafo va a ser sin direccion, si es 1 es dirigido
 
 if di is 0:
-    i = 15 #Cantidad de nodos que va a tener el grafo
+    i = 30 #Cantidad de nodos que va a tener el grafo
     G = Grafo()
     G.agrega(i)
-    G.guarda()
     G.distancia()
     G.conecta()
     G.conectaAleatorio()
@@ -199,10 +194,9 @@ if di is 0:
 
 
 if di is 1:
-    i = 15 #Cantidad de nodos que va a tener el grafo
+    i = 35 #Cantidad de nodos que va a tener el grafo
     G = Grafo()
     G.agrega(i)
-    G.guarda()
     G.distancia()
     G.conectaDir()
     G.conectaAleatorioDir()
