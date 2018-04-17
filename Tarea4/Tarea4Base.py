@@ -23,7 +23,7 @@ class Grafo:
                 self.nodos.append((x,y))
                 print(x, y, file = crear)
                 if not (x, y) in self.vecinos:
-                    self.vecinos[(x,y)] = set()
+                    self.vecinos[(x,y)] = []
           
 
     def conecta(self, k):
@@ -32,8 +32,8 @@ class Grafo:
                 a = self.nodos[j]
                 b = self.nodos[j-r]
                 self.aristas[(a,b)] = self.aristas[(b,a)] = r
-                self.vecinos[a].add(b)
-                self.vecinos[b].add(a)
+                self.vecinos[a].append(b)
+                self.vecinos[b].append(a)
 
     def conectaAleatorio(self, p):
         for (x1,y1) in self.nodos:
@@ -49,8 +49,8 @@ class Grafo:
                         self.aristas[((x1,y1),(x2,y2))] = self.aristas[((x2,y2),(x1,y1))] = dis2
                     else:
                         self.aristas[((x1,y1),(x2,y2))] = self.aristas[((x2,y2),(x1,y1))] = dis                       
-                    self.vecinos[(x1,y1)].add((x2,y2))
-                    self.vecinos[(x2,y2)].add((x1,y1))
+                    self.vecinos[(x1,y1)].append((x2,y2))
+                    self.vecinos[(x2,y2)].append((x1,y1))
                         
 
     def floyd_warshall(self):
@@ -73,12 +73,45 @@ class Grafo:
                         if (desde, hasta) not in self.d or c < self.d[(desde, hasta)]:
                             self.d[(desde, hasta)] = c # mejora al camino actual
         return self.d
+
+    def DistanciaCoeficiente(self):
+        self.sumDis = 0
+        for u in self.d:
+            self.sumDis = self.sumDis + self.d[u]
+        self.argDis = self.sumDis/len(self.d)
+        #print(self.argDis)
+
+        self.densidad = []
+         #guardar en lista todas las aristas originales
+        for (x,y) in self.nodos:
+            numvecino = len(self.vecinos[(x,y)]) -1
+            for t in range(numvecino):
+                print("el vecino es")
+                
+                self.clustCoef = 0
+                h = self.vecinos[(x,y)][t]
+                print(h)
+
+                for m in self.vecinos[h]:
+                    
+                    if m in self.vecinos[(x,y)] and m is not (x,y) and (y,x):
+                        print("el vecino del vecino es")
+                        print(m)
+                        self.clustCoef = self.clustCoef + 1
+                        #preguntar si la arista esta en lista
+                        #si sí, la cuenta y ,a quitas de la lista la arista encontrada *2
+                #print(self.clustCoef)
+            dens = 2*self.clustCoef/((numvecino)*(numvecino-1))
+            self.densidad.append(dens)
+        #print(self.densidad)
+        
+        
                     
 
     def graficar(self):
         with open("Tarea4.plot","w") as archivo:
-             print("set term png", file=archivo)
-             print("set output 'Tarea4.png'", file=archivo)
+             print("set term pdf", file=archivo)
+             print("set output 'Tarea4.pdf'", file=archivo)
              print("set xrange [-.1:1.1]", file=archivo)
              print("set yrange [-.1:1.1]", file=archivo)
              print("set pointsize .7", file=archivo)
@@ -102,7 +135,7 @@ class Grafo:
 
 
 
-i = 11
+i = 6
 k = ceil(i/4)
 p = 0.1
 G = Grafo()
@@ -110,4 +143,5 @@ G.agrega(i)
 G.conecta(k)
 G.conectaAleatorio(p)
 G.floyd_warshall()
+G.DistanciaCoeficiente()
 G.graficar()
