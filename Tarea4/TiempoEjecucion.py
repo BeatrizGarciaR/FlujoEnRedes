@@ -158,14 +158,15 @@ class Grafo:
              print("quit()",file=archivo)
 
 
-Tk = (i/4)
 p = 0.2
 for n in range(1,21):
     for j in range (0, 10):
          with open("TiemposEjecucion.csv", "at") as archivo:
                 TiempoInicio = time.clock()
-                i = 10*n
+                i = 5*n
                 print(i)
+                Tk = (i/4)
+                k = ceil(i/4)
                 G = Grafo()
                 G.agrega(i)
                 G.conecta(k)
