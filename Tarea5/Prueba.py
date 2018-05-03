@@ -4,7 +4,7 @@ from random import randint, uniform, random
 import time, random
 
 def distancia(p, q):
-    return sqrt(((p[0]-q[0])**2)+((p[1]-q[1])**2))
+     return (abs(q[0]-p[0])+ abs(q[1]-p[1]))
     
 
 class Grafo:
@@ -21,8 +21,8 @@ class Grafo:
             self.distancia = 1/(i+1)
             for m in range (1,i+1):
                 for n in range(1, i+1):
-                    x = n*self.distancia
-                    y = 1 - m*self.distancia
+                    x = m
+                    y = n
                     self.nodos.append((x,y))
                     print(x, y, file = crear)
                     if not (x, y) in self.vecinos:
@@ -31,26 +31,18 @@ class Grafo:
 
     def conexiones(self, umbral):
         for (x,y) in self.nodos:
-            print("nodo", (x,y))
-            (x1,y1) = (x + umbral*self.distancia, y)
-            print("(x1,y1)",(x1,y1))
-            (x2,y2) = (x - umbral*self.distancia, y)
-            print("(x2,y2)",(x2,y2)) 
-            (x3,y3) = (x, y + umbral*self.distancia)
-            print("(x3,y3)",(x3,y3))
-            (x4,y4) = (x, y - umbral*self.distancia)
-            print("(x4,y4)",(x4,y4))
-            if (x1,y1) in self.nodos:
-                self.aristas[((x1,y1),(x,y))] = self.aristas[((x,y),(x1,y1))] = 1
-            if (x2,y2) in self.nodos:
-                self.aristas[((x2,y2),(x,y))] = self.aristas[((x,y),(x2,y2))] = 1 
-            if (x3,y3) in self.nodos:
-                self.aristas[((x3,y3),(x,y))] = self.aristas[((x,y),(x3,y3))] = 1
-            if (x4,y4) in self.nodos:
-                self.aristas[((x4,y4),(x,y))] = self.aristas[((x,y),(x4,y4))] = 1 
+            for (p,q) in self.nodos:
+                if (x,y) is not (p,q):
+                    if distancia ((x,y),(p,q)) < umbral+1:
+                        self.aristas[(x,y),(p,q)] = self.aristas[(p,q),(x,y)] = umbral
+
+
+     def conexionAleatoria(self,p):
+          numero = rand()
+          if           
 
     
-    def camino(self): # construcción de un camino aumentante
+    def camino(self):
         cola = [self.s]
         usados = set()
         camino = dict()
@@ -66,13 +58,14 @@ class Grafo:
                         camino[v] = (u, dif)
         if self.t in usados:
            return camino
-        else: # no se alcanzó
+        else:
             return None
         
 
-    def ford_fulkerson(self): # algoritmo de Ford y Fulkerson
+    def ford_fulkerson(self): 
         self.s = self.nodos[0]
         self.t = self.nodos[k**2 - 1]
+        print(self.s, self.t)
         if self.s == self.t:
             return 0
         maximo = 0
@@ -80,19 +73,19 @@ class Grafo:
         while True:
             aum = self.camino()
             if aum is None:
-                break # ya no hay
+                break 
             incr = min(aum.values(), key = (lambda k: k[1]))[1]
             u = self.t
             while u in aum:
                 v = aum[u][0]
-                actual = self.f.get((v, u), 0) # cero si no hay
+                actual = self.f.get((v, u), 0) 
                 inverso = self.f.get((u, v), 0)
                 self.f[(v, u)] = actual + incr
                 self.f[(u, v)] = inverso - incr
                 u = v
             maximo += incr
-        with open("FulkersonCompleto.dat", "at") as archivo:
-            print(maximo, file=archivo)
+        #with open("FulkersonCompleto.dat", "at") as archivo:
+        print(maximo)
         return maximo
 
 
@@ -100,9 +93,9 @@ class Grafo:
         with open("Tarea5Prueba.plot","w") as archivo:
              print("set term pdf", file=archivo)
              print("set output 'Tarea5Prueba.pdf'", file=archivo)
-             print("set xrange [0:1]", file=archivo)
-             print("set yrange [0:1]", file=archivo)
-             print("set pointsize .7", file=archivo)
+             print("set xrange [0: {:d}]".format(k+1), file=archivo)
+             print("set yrange [0: {:d}]".format(k+1), file=archivo)
+             print("set pointsize .5", file=archivo)
              print("set size square", file=archivo)
              print("set key off", file=archivo)
              num = 0
@@ -127,4 +120,5 @@ umbral = 1
 G = Grafo()
 G.agrega(k)
 G.conexiones(umbral)
+G.ford_fulkerson()
 G.graficar()
