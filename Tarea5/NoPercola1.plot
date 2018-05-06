@@ -2,6 +2,8 @@ set term pdf
 set output 'NoPercola1.pdf
 set xrange [0: 9]
 set yrange [0: 9]
+unset xtics
+unset ytics
 set pointsize .5
 set size square
 set key off
@@ -229,13 +231,11 @@ set arrow 221 from 8.000000,6.000000 to 8.000000, 7.000000 nohead lw 1 lc 0
 set arrow 222 from 8.000000,7.000000 to 8.000000, 6.000000 nohead lw 1 lc 0
 set arrow 223 from 8.000000,7.000000 to 8.000000, 8.000000 nohead lw 1 lc 0
 set arrow 224 from 8.000000,8.000000 to 8.000000, 7.000000 nohead lw 1 lc 0
-set arrow 225 from 4.000000,2.000000 to 5.000000, 8.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
-set arrow 226 from 5.000000,4.000000 to 6.000000, 3.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
-set arrow 227 from 5.000000,6.000000 to 6.000000, 3.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
-set arrow 228 from 5.000000,7.000000 to 4.000000, 1.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
-set arrow 229 from 6.000000,3.000000 to 2.000000, 8.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
-set arrow 230 from 7.000000,4.000000 to 8.000000, 3.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
-set arrow 231 from 8.000000,2.000000 to 8.000000, 8.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
-plot 'Fulkerson.dat' using 1:2 with points pt 7
+set arrow 225 from 1.000000,3.000000 to 1.000000, 6.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
+set arrow 226 from 4.000000,1.000000 to 1.000000, 7.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
+set arrow 227 from 5.000000,4.000000 to 1.000000, 3.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
+set arrow 228 from 5.000000,6.000000 to 4.000000, 2.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
+set arrow 229 from 8.000000,4.000000 to 1.000000, 2.000000 head filled size screen 0.02,15,45 lw 1.5 lc 6
+plot 'Fulkerson.dat' using 1:2:3 with points pt 7 lc var
 show arrow
 quit()

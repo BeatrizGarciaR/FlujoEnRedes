@@ -19,15 +19,17 @@ class Grafo:
         
     def agrega(self, i):
         with open("Fulkerson.dat", "w") as crear:
-            self.distancia = 1/(i+1)
             for m in range (1,i+1):
                 for n in range(1, i+1):
                     x = m
                     y = n
                     self.nodos.append((x,y))
-                    print(x, y, file = crear)
+                    print(x, y, 0, file = crear)
                     if not (x, y) in self.vecinos:
                         self.vecinos[(x,y)] = []
+            print(self.nodos[0][0],self.nodos[0][1],4, file=crear)
+            print(self.nodos[len(self.nodos)-1][0],self.nodos[len(self.nodos)-1][1],7, file=crear)
+            
                         
 
     def nuevosNodos(self):
@@ -39,13 +41,14 @@ class Grafo:
                 self.auxIndice.append(q)
                 self.auxNodo.append(self.nodos[q])
                 del self.nodos[q]
+     
             else:
                q = randint(1,len(self.nodos)-2)
                if q not in self.auxIndice:
                     self.auxNodo.append(q)
                     self.auxNodo.append(self.nodos[q])
                     del self.nodos[q]
-            
+                    
             for n in self.auxNodo:
                  for m in self.nodos:
                      if (n,m) in self.aristas:
@@ -81,7 +84,7 @@ class Grafo:
 
 
     def NuevasAristas(self):
-        for qa in range(0,16):
+        for qa in range(0,20):
             p = randint(0,k**2-1)
             q = randint(0,k**2-1)
             arista = (self.nodos[p],self.nodos[q])
@@ -160,6 +163,8 @@ class Grafo:
              print("set output 'NoPercola.pdf", file=archivo)
              print("set xrange [0: {:d}]".format(k+1), file=archivo)
              print("set yrange [0: {:d}]".format(k+1), file=archivo)
+             print("unset xtics", file=archivo)
+             print("unset ytics", file=archivo)
              print("set pointsize .5", file=archivo)
              print("set size square", file=archivo)
              print("set key off", file=archivo)
@@ -177,7 +182,7 @@ class Grafo:
                  else:
                      print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled size screen 0.02,15,45 lw 1.5 lc 6".format(num+1,x1,y1,x2,y2),file=archivo)
                  num+=1
-             print("plot 'Fulkerson.dat' using 1:2 with points pt 7", file=archivo)
+             print("plot 'Fulkerson.dat' using 1:2:3 with points pt 7 lc var", file=archivo)
              print("show arrow", file=archivo)
              print("quit()",file=archivo)
 
@@ -188,6 +193,8 @@ class Grafo:
              print("set output 'PercolaNodo.pdf", file=archivo)
              print("set xrange [0: {:d}]".format(k+1), file=archivo)
              print("set yrange [0: {:d}]".format(k+1), file=archivo)
+             print("unset xtics", file=archivo)
+             print("unset ytics", file=archivo)
              print("set pointsize .5", file=archivo)
              print("set size square", file=archivo)
              print("set key off", file=archivo)
@@ -205,7 +212,7 @@ class Grafo:
                  else:
                      print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled size screen 0.02,15,45 lw 1.5 lc 6".format(num+1,x1,y1,x2,y2),file=archivo)
                  num+=1
-             print("plot 'NodosFulkerson.dat' using 1:2 with points pt 7", file=archivo)
+             print("plot 'NodosFulkerson.dat' using 1:2:3 with points pt 7 lc var", file=archivo)
              print("show arrow", file=archivo)
              print("quit()",file=archivo)
 
@@ -216,6 +223,8 @@ class Grafo:
              print("set output 'PercolaArista.pdf", file=archivo)
              print("set xrange [0: {:d}]".format(k+1), file=archivo)
              print("set yrange [0: {:d}]".format(k+1), file=archivo)
+             print("unset xtics", file=archivo)
+             print("unset ytics", file=archivo)
              print("set pointsize .5", file=archivo)
              print("set size square", file=archivo)
              print("set key off", file=archivo)
@@ -233,7 +242,7 @@ class Grafo:
                  else:
                      print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled size screen 0.02,15,45 lw 1.5 lc 6".format(num+1,x1,y1,x2,y2),file=archivo)
                  num+=1
-             print("plot 'Fulkerson.dat' using 1:2 with points pt 7", file=archivo)
+             print("plot 'Fulkerson.dat' using 1:2:3 with points pt 7 lc var", file=archivo)
              print("show arrow", file=archivo)
              print("quit()",file=archivo)
 
@@ -244,6 +253,8 @@ class Grafo:
              print("set output 'NoPercola1.pdf", file=archivo)
              print("set xrange [0: {:d}]".format(k+1), file=archivo)
              print("set yrange [0: {:d}]".format(k+1), file=archivo)
+             print("unset xtics", file=archivo)
+             print("unset ytics", file=archivo)
              print("set pointsize .5", file=archivo)
              print("set size square", file=archivo)
              print("set key off", file=archivo)
@@ -261,7 +272,7 @@ class Grafo:
                  else:
                      print("set arrow {:d} from {:f},{:f} to {:f}, {:f} head filled size screen 0.02,15,45 lw 1.5 lc 6".format(num+1,x1,y1,x2,y2),file=archivo)
                  num+=1
-             print("plot 'Fulkerson.dat' using 1:2 with points pt 7", file=archivo)
+             print("plot 'Fulkerson.dat' using 1:2:3 with points pt 7 lc var", file=archivo)
              print("show arrow", file=archivo)
              print("quit()",file=archivo)
 
@@ -269,22 +280,22 @@ class Grafo:
 k = 8
 umbral = 1
 prob = 0.001
-##G = Grafo(k,prob)
-##G.agrega(k)
-##G.conexiones(umbral)
-##G.conexionesAleatorias(prob)
-##G.ford_fulkerson()
-##G.graficar()
-##G.percolaNodos()
-##G.graficarP()
-
-#print("cambia")
-
 G = Grafo(k,prob)
 G.agrega(k)
 G.conexiones(umbral)
 G.conexionesAleatorias(prob)
 G.ford_fulkerson()
-G.graficar1()
-G.percolaAristas()
-G.graficarA()
+G.graficar()
+G.percolaNodos()
+G.graficarP()
+
+#print("cambia")
+
+##G = Grafo(k,prob)
+##G.agrega(k)
+##G.conexiones(umbral)
+##G.conexionesAleatorias(prob)
+##G.ford_fulkerson()
+##G.graficar1()
+##G.percolaAristas()
+##G.graficarA()

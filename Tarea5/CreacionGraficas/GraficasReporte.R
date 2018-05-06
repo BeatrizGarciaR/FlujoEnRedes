@@ -11,7 +11,7 @@ for (u in 1:4){
     umbral <- rbind(umbral, FordFulkersonA[u,(((11*j)-10):(11*j))])
   }
   pdf(paste("FordFulkersonA",u,".pdf"))
-  boxplot(umbral, xaxt="n",ylim=c(0,100), xlab=c("Repeticiones"), ylab=c("Flujo m谩ximo"))
+  boxplot(umbral, xaxt="n",ylim=c(0,100))
   axis(1, at=1:10, labels=seq(1,10,1))
 }
 
@@ -29,7 +29,7 @@ for (u in 1:4){
     umbral <- rbind(umbral, FordFulkersonN[u,(((83*j)-82):(83*j))])
   }
   pdf(paste("FordFulkersonN",u,".pdf"))
-  boxplot(umbral, xaxt="n",ylim=c(0,85), xlab=c("Quitando nodos"), ylab=c("Flujo m谩ximo"))
+  boxplot(umbral, xaxt="n",ylim=c(0,85))
   axis(1, at=1:82, labels=seq(1,82,1))
 }
 
@@ -41,8 +41,8 @@ for (i in 1:4){
   TiempoEjecucionA <- rbind(TiempoEjecucionA, TiempoA[((10*i)-9):(10*i),])
 }
 pdf(paste("TiempoEjecucionA.pdf"))
-boxplot(t(TiempoEjecucionA), xaxt="n",ylim=c(0,30), xlab=c("Variaci贸n en el umbral"), ylab=c("Tiempo de ejecuci贸n en segundos"))
-axis(1, at=1:10, labels=seq(1,10,1))
+boxplot(t(TiempoEjecucionA),ylim=c(0,30), ylab="Tiempo en segundos", xlab="Tama駉 de umbral")
+axis(1, at=1:4, labels=seq(1,4,1))
 
 
 TiempoN <- read.csv("TiempoPercolaNodo.csv", header=FALSE)
@@ -52,8 +52,7 @@ for (i in 1:4){
   TiempoEjecucionN <- rbind(TiempoEjecucionN, TiempoN[((10*i)-9):(10*i),])
 }
 pdf(paste("TiempoEjecucionN.pdf"))
-boxplot(t(TiempoEjecucionN), xaxt="n",ylim=c(0,50), xlab=c("Variaci贸n en el umbral"), ylab=c("Tiempo de ejecuci贸n en segundos"))
-axis(1, at=1:10, labels=seq(1,10,1))
-
+boxplot(t(TiempoEjecucionN),ylim=c(0,50),ylab="Tiempo en segundos", xlab="Tama駉 de umbral")
+axis(1, at=1:4, labels=seq(1,4,1))
 
 graphics.off()
